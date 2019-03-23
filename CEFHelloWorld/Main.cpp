@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "App.h"
+#include "AppBrowser.h"
+#include "AppRenderer.h"
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_opt_ HINSTANCE hPrevInstance,
@@ -11,7 +13,29 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(nCmdShow);
 
     CefMainArgs cefMainArgs(hInstance);
-    int nExitCode = CefExecuteProcess(cefMainArgs, nullptr, nullptr);
+    CefRefPtr<CefCommandLine> cefCommandLine = CefCommandLine::CreateCommandLine();
+    cefCommandLine->InitFromString(::GetCommandLine());
+
+    CefRefPtr<CefApp> cefApp = nullptr;
+    if (!cefCommandLine->HasSwitch("type"))
+    {
+        cefApp = new AppBrowser;
+    }
+    else
+    {
+        CefString strType = cefCommandLine->GetSwitchValue("type");
+        if (strType == "renderer")
+        {
+
+            cefApp = new AppRenderer;
+        }
+        else
+        {
+            cefApp = new App;
+        }
+    }
+    
+    int nExitCode = CefExecuteProcess(cefMainArgs, cefApp, nullptr);
     if (nExitCode >= 0)
     {
         return nExitCode;
@@ -19,9 +43,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     CefSettings cefSettings;
     cefSettings.no_sandbox = true;
-
-    CefRefPtr<CefApp> cefApp = new App();
-
+    
     CefInitialize(cefMainArgs, cefSettings, cefApp, nullptr);
 
     CefRunMessageLoop();
