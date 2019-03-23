@@ -1,6 +1,6 @@
 #pragma once
 
-class Client: public CefClient, public CefLifeSpanHandler, public CefContextMenuHandler
+class Client: public CefClient, public CefLifeSpanHandler, public CefContextMenuHandler, public CefLoadHandler
 {
     IMPLEMENT_REFCOUNTING(Client)
 
@@ -11,4 +11,9 @@ public:
     virtual CefRefPtr<CefContextMenuHandler> GetContextMenuHandler() override;
     virtual void OnBeforeContextMenu(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame,
         CefRefPtr<CefContextMenuParams> params, CefRefPtr<CefMenuModel> model) override;
+
+    virtual CefRefPtr<CefLoadHandler> GetLoadHandler() override;
+    virtual void OnLoadEnd(CefRefPtr<CefBrowser> browser,
+        CefRefPtr<CefFrame> frame, int httpStatusCode) override;
+
 };
