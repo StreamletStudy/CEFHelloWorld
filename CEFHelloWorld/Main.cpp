@@ -1,31 +1,32 @@
-// CEFHelloWorld.cpp : Defines the entry point for the application.
-//
 #include "stdafx.h"
-#include "MainWindow.h"
+#include "App.h"
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-                     _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ LPWSTR    lpCmdLine,
-                     _In_ int       nCmdShow)
+    _In_opt_ HINSTANCE hPrevInstance,
+    _In_ LPWSTR    lpCmdLine,
+    _In_ int       nCmdShow)
 {
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
     UNREFERENCED_PARAMETER(nCmdShow);
 
-    if (!CreateMainWindow(hInstance))
+    CefMainArgs cefMainArgs(hInstance);
+    int nExitCode = CefExecuteProcess(cefMainArgs, nullptr, nullptr);
+    if (nExitCode >= 0)
     {
-        return FALSE;
+        return nExitCode;
     }
 
-    MSG msg = {};
-    while (GetMessage(&msg, nullptr, 0, 0))
-    {
-        if (!TranslateAccelerator(msg.hwnd, NULL, &msg))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-    }
+    CefSettings cefSettings;
+    cefSettings.no_sandbox = true;
 
-    return (int)msg.wParam;
+    CefRefPtr<CefApp> cefApp = new App();
+
+    CefInitialize(cefMainArgs, cefSettings, cefApp, nullptr);
+
+    CefRunMessageLoop();
+
+    CefShutdown();
+
+    return 0;
 }
