@@ -6,7 +6,7 @@ const int ADDRESS_BAR_MARGIN = 10;
 
 bool MainFrame::Create()
 {
-    CRect rcWindow(CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT * 2, CW_USEDEFAULT * 2);
+    CRect rcWindow(CW_USEDEFAULT, CW_USEDEFAULT, 0, 0);
     HWND hWnd = CWindowImpl<MainFrame>::Create(nullptr, &rcWindow, L"CEF Browser", WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE);
     assert(hWnd != nullptr);
     return true;
