@@ -798,7 +798,7 @@ public:
 					// Get the ID-list and attributes of the file.
 					USES_CONVERSION;
 					int nFileNameLength = (int)(DWORD_PTR)(pChar - pAnchor);
-					TCHAR szFileName[MAX_PATH] = { 0 };
+					TCHAR szFileName[MAX_PATH] = {};
 					ATL::Checked::tcsncpy_s(szFileName, MAX_PATH, pAnchor, nFileNameLength);
 #ifdef STRICT_TYPED_ITEMIDS
 					PIDLIST_RELATIVE pidl = NULL;
@@ -816,7 +816,7 @@ public:
 							if (SUCCEEDED(pFolder->BindToObject(pidl, NULL, IID_IShellLink, (void**)&pLink)))
 							{
 								// Get the shortcut's target path.
-								TCHAR szPath[MAX_PATH] = { 0 };
+								TCHAR szPath[MAX_PATH] = {};
 								if (SUCCEEDED(pLink->GetPath(szPath, MAX_PATH, NULL, 0)))
 								{
 									// If the target path is longer than the shortcut name, then add on the number 
@@ -1792,36 +1792,36 @@ public:
 		USES_CONVERSION;
 		cf.dwEffects = 0;
 		cf.dwMask = 0;
-		if((m_cf.Flags & CF_NOSTYLESEL) == 0)
+		if((this->m_cf.Flags & CF_NOSTYLESEL) == 0)
 		{
 			cf.dwMask |= CFM_BOLD | CFM_ITALIC;
 			cf.dwEffects |= this->IsBold() ? CFE_BOLD : 0;
 			cf.dwEffects |= this->IsItalic() ? CFE_ITALIC : 0;
 		}
-		if((m_cf.Flags & CF_NOSIZESEL) == 0)
+		if((this->m_cf.Flags & CF_NOSIZESEL) == 0)
 		{
 			cf.dwMask |= CFM_SIZE;
 			// GetSize() returns in tenths of points so mulitply by 2 to get twips
 			cf.yHeight = this->GetSize() * 2;
 		}
 
-		if((m_cf.Flags & CF_NOFACESEL) == 0)
+		if((this->m_cf.Flags & CF_NOFACESEL) == 0)
 		{
 			cf.dwMask |= CFM_FACE;
-			cf.bPitchAndFamily = m_cf.lpLogFont->lfPitchAndFamily;
+			cf.bPitchAndFamily = this->m_cf.lpLogFont->lfPitchAndFamily;
 			ATL::Checked::tcscpy_s(cf.szFaceName, _countof(cf.szFaceName), this->GetFaceName());
 		}
 
-		if((m_cf.Flags & CF_EFFECTS) != 0)
+		if((this->m_cf.Flags & CF_EFFECTS) != 0)
 		{
 			cf.dwMask |= CFM_UNDERLINE | CFM_STRIKEOUT | CFM_COLOR;
 			cf.dwEffects |= this->IsUnderline() ? CFE_UNDERLINE : 0;
 			cf.dwEffects |= this->IsStrikeOut() ? CFE_STRIKEOUT : 0;
 			cf.crTextColor = this->GetColor();
 		}
-		if((m_cf.Flags & CF_NOSCRIPTSEL) == 0)
+		if((this->m_cf.Flags & CF_NOSCRIPTSEL) == 0)
 		{
-			cf.bCharSet = m_cf.lpLogFont->lfCharSet;
+			cf.bCharSet = this->m_cf.lpLogFont->lfCharSet;
 			cf.dwMask |= CFM_CHARSET;
 		}
 		cf.yOffset = 0;
@@ -2853,7 +2853,7 @@ public:
 		return hWnd;
 	}
 
-	static const UINT GetFindReplaceMsg()
+	static UINT GetFindReplaceMsg()
 	{
 		static const UINT nMsgFindReplace = ::RegisterWindowMessage(FINDMSGSTRING);
 		return nMsgFindReplace;
@@ -2990,8 +2990,8 @@ public:
 	{
 		ATLASSERT(hFont != NULL);
 		CWindowDC dc = hWnd;
-		TEXTMETRIC tmText = { 0 };
-		SIZE sizeText = { 0 };
+		TEXTMETRIC tmText = {};
+		SIZE sizeText = {};
 		HFONT hFontOld = dc.SelectFont(hFont);
 		dc.GetTextMetrics(&tmText);
 		m_sizeUnits.cy = tmText.tmHeight + tmText.tmExternalLeading;
@@ -3066,6 +3066,9 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////
 // CMemDlgTemplate - in-memory dialog template - DLGTEMPLATE or DLGTEMPLATEEX
+
+// traits suitable for dialog controls
+typedef ATL::CWinTraits<WS_CHILD | WS_VISIBLE, 0>	CDlgControlWinTraits;
 
 template <class TWinTraits>
 class CMemDlgTemplateT
@@ -3334,7 +3337,7 @@ public:
 	}
 };
 
-typedef CMemDlgTemplateT<ATL::CControlWinTraits>	CMemDlgTemplate;
+typedef CMemDlgTemplateT<CDlgControlWinTraits>	CMemDlgTemplate;
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -3378,7 +3381,7 @@ typedef CMemDlgTemplateT<ATL::CControlWinTraits>	CMemDlgTemplate;
 
 #define END_DIALOG() \
 		m_Template.Create(bExTemplate, szCaption, nX, nY, nWidth, nHeight, dwStyle, dwExStyle, szFontName, wFontSize, wWeight, bItalic, bCharset, dwHelpID, ClassName, Menu); \
-	};
+	}
 
 #define DIALOG_CAPTION(caption) \
 		szCaption = caption;
@@ -3406,7 +3409,7 @@ typedef CMemDlgTemplateT<ATL::CControlWinTraits>	CMemDlgTemplate;
 	{
 
 #define END_CONTROLS_MAP() \
-	};
+	}
 
 
 #define CONTROL_LTEXT(text, id, x, y, width, height, style, exStyle) \
@@ -4853,7 +4856,7 @@ public:
 										(LPWSTR)(((ATL::_DialogSplitHelper::DLGITEMTEMPLATEEX*)pItem) + 1) :
 										(LPWSTR)(pItem + 1);
 								// Get control rect.
-								RECT rect = { 0 };
+								RECT rect = {};
 								rect.left = bDialogEx ? ((ATL::_DialogSplitHelper::DLGITEMTEMPLATEEX*)pItem)->x : pItem->x;
 								rect.top = bDialogEx ? ((ATL::_DialogSplitHelper::DLGITEMTEMPLATEEX*)pItem)->y : pItem->y;
 								rect.right = rect.left + (bDialogEx ? ((ATL::_DialogSplitHelper::DLGITEMTEMPLATEEX*)pItem)->cx : pItem->cx);
@@ -5172,8 +5175,8 @@ public:
 		CFontHandle fontThisDialog = this->GetFont();
 		CClientDC dcScreen(NULL);
 
-		LOGFONT titleLogFont = {0};
-		LOGFONT bulletLogFont = {0};
+		LOGFONT titleLogFont = {};
+		LOGFONT bulletLogFont = {};
 		fontThisDialog.GetLogFont(&titleLogFont);
 		fontThisDialog.GetLogFont(&bulletLogFont);
 
@@ -5443,19 +5446,19 @@ public:
 // Operations
 	void EnableResizing()
 	{
-		ATLASSERT(m_hWnd == NULL);   // can't do this after it's created
+		ATLASSERT(this->m_hWnd == NULL);   // can't do this after it's created
 		this->m_psh.dwFlags |= PSH_RESIZABLE;
 	}
 
 	void UseHeaderBitmap()
 	{
-		ATLASSERT(m_hWnd == NULL);   // can't do this after it's created
+		ATLASSERT(this->m_hWnd == NULL);   // can't do this after it's created
 		this->m_psh.dwFlags |= PSH_HEADERBITMAP;
 	}
 
 	void SetNoMargin()
 	{
-		ATLASSERT(m_hWnd == NULL);   // can't do this after it's created
+		ATLASSERT(this->m_hWnd == NULL);   // can't do this after it's created
 		this->m_psh.dwFlags |= PSH_NOMARGIN;
 	}
 

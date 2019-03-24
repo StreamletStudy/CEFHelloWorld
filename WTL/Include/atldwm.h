@@ -262,7 +262,7 @@ public:
 
 	CDwmWindowT< TBase >& operator =(HWND hWnd)
 	{
-		m_hWnd = hWnd;
+		this->m_hWnd = hWnd;
 		return *this;
 	}
 };
@@ -424,7 +424,7 @@ public:
 // Operations
 	BOOL SubclassWindow(HWND hWnd)
 	{
-		ATLASSERT(m_hWnd == NULL);
+		ATLASSERT(this->m_hWnd == NULL);
 		ATLASSERT(::IsWindow(hWnd));
 		BOOL bRet = _windowClass::SubclassWindow(hWnd);
 		if(bRet)
@@ -461,7 +461,7 @@ public:
 	{
 		T* pT = static_cast<T*>(this);
 		HDC hDCPaint = NULL;
-		RECT rcClient = { 0 };
+		RECT rcClient = {};
 		this->GetClientRect(&rcClient);
 		this->m_BufferedPaint.Begin(hDC, &rcClient, this->m_dwFormat, &this->m_PaintParams, &hDCPaint);
 		ATLASSERT(hDCPaint != NULL);
