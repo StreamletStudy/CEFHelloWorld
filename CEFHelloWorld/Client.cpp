@@ -95,3 +95,13 @@ void Client::OnAddressChange(CefRefPtr<CefBrowser> browser,
 {
     m_pMainFrame->OnAddressChange(url);
 }
+
+void Client::OnTitleChange(CefRefPtr<CefBrowser> browser, const CefString& title)
+{
+    m_pMainFrame->OnTitleChange(title);
+}
+
+void Client::OnLoadingProgressChange(CefRefPtr<CefBrowser> browser, double progress)
+{
+    m_pMainFrame->OnLoadingProgressChange(progress);
+}

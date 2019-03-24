@@ -3,8 +3,6 @@
 #include "AddressBar.h"
 #include "PageHolder.h"
 
-#define ID_ADDRESSBAR 0x1001
-
 class MainFrame : public CWindowImpl<MainFrame>
 {
 public:
@@ -34,10 +32,13 @@ public:
 
 public:
     void OnAddressChange(const CefString& url);
+    void OnTitleChange(const CefString& title);
+    void OnLoadingProgressChange(double progress);
 
 private:
     CFont m_Font;
     AddressBar m_AddressBar;
+    CProgressBarCtrl m_ProgressBar;
     PageHolder m_PageHolder;
 
     CefRefPtr<CefClient> m_Client;

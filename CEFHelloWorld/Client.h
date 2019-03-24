@@ -41,6 +41,8 @@ public:
     virtual CefRefPtr<CefDisplayHandler> GetDisplayHandler() override;
     virtual void OnAddressChange(CefRefPtr<CefBrowser> browser,
         CefRefPtr<CefFrame> frame, const CefString& url)override;
+    virtual void OnTitleChange(CefRefPtr<CefBrowser> browser, const CefString& title) override;
+    virtual void OnLoadingProgressChange(CefRefPtr<CefBrowser> browser, double progress) override;
 
 private:
     MainFrame *m_pMainFrame;

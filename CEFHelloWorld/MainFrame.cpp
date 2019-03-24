@@ -3,6 +3,7 @@
 
 const int ADDRESS_BAR_HEIGHT = 36;
 const int ADDRESS_BAR_MARGIN = 10;
+const int PROGRESS_BAR_HEIGHT = 6;
 
 bool MainFrame::Create()
 {
@@ -35,11 +36,19 @@ LRESULT MainFrame::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL &bHand
     CRect rcAddressBar = rect;
     rcAddressBar.bottom = rcAddressBar.top + ADDRESS_BAR_HEIGHT;
     rcAddressBar.DeflateRect(ADDRESS_BAR_MARGIN, 0);
-    m_AddressBar.Create(m_hWnd, &rcAddressBar, nullptr,
-        WS_CHILD | WS_VISIBLE | WS_TABSTOP | ES_AUTOHSCROLL | ES_WANTRETURN, 0, ID_ADDRESSBAR);
+    m_AddressBar.Create(m_hWnd, &rcAddressBar, nullptr, WS_CHILD | WS_VISIBLE | WS_TABSTOP | ES_AUTOHSCROLL | ES_WANTRETURN);
     
+    CRect rcProgressBar = rect;
+    rcProgressBar.top = rcAddressBar.bottom;
+    rcProgressBar.bottom = rcProgressBar.top + PROGRESS_BAR_HEIGHT;
+    rcProgressBar.DeflateRect(ADDRESS_BAR_MARGIN, 0);
+    m_ProgressBar.Create(m_hWnd, &rcProgressBar, nullptr, WS_CHILD | WS_VISIBLE | PBS_SMOOTH);
+    m_ProgressBar.ModifyStyleEx(WS_EX_STATICEDGE, 0);
+    m_ProgressBar.SetRange(0, 100);
+    m_ProgressBar.SetBarColor(RGB(0, 0x80, 0));
+
     CRect rcPageHolder = rect;
-    rcPageHolder.top = ADDRESS_BAR_HEIGHT;
+    rcPageHolder.top = rcProgressBar.bottom;
     m_PageHolder.Create(m_hWnd, &rcPageHolder, nullptr, WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS);
 
     m_Font.CreateFont(-24, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
@@ -81,12 +90,18 @@ LRESULT MainFrame::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL &bHandle
     rcAddressBar.DeflateRect(ADDRESS_BAR_MARGIN, 0);
     m_AddressBar.MoveWindow(&rcAddressBar);
 
+    CRect rcProgressBar = rect;
+    rcProgressBar.top = rcAddressBar.bottom;
+    rcProgressBar.bottom = rcProgressBar.top + PROGRESS_BAR_HEIGHT;
+    rcProgressBar.DeflateRect(ADDRESS_BAR_MARGIN, 0);
+    m_ProgressBar.MoveWindow(&rcProgressBar);
+
     CRect rcPageHolder = rect;
-    rcPageHolder.top = ADDRESS_BAR_HEIGHT;
+    rcPageHolder.top = rcProgressBar.bottom;
     m_PageHolder.MoveWindow(&rcPageHolder);
 
     if (m_Browser != nullptr) {
-        ::MoveWindow(m_Browser->GetHost()->GetWindowHandle(), rcPageHolder.left, rcPageHolder.top, rcPageHolder.Width(), rcPageHolder.Height(), TRUE);
+        ::MoveWindow(m_Browser->GetHost()->GetWindowHandle(), 0, 0, rcPageHolder.Width(), rcPageHolder.Height(), TRUE);
     }
 
     return 0;
@@ -109,4 +124,14 @@ LRESULT MainFrame::OnAddressBarEntered(UINT uMsg, WPARAM wParam, LPARAM lParam, 
 void MainFrame::OnAddressChange(const CefString& url)
 {
     m_AddressBar.SetWindowText(url.c_str());
+}
+
+void MainFrame::OnTitleChange(const CefString& title)
+{
+    SetWindowText(title.c_str());
+}
+
+void MainFrame::OnLoadingProgressChange(double progress)
+{
+    m_ProgressBar.SetPos((int)(progress * 100));
 }
