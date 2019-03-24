@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "AppBrowser.h"
 #include "Client.h"
+#include "MainFrame.h"
 
 CefRefPtr<CefBrowserProcessHandler> AppBrowser::GetBrowserProcessHandler()
 {
@@ -9,13 +10,19 @@ CefRefPtr<CefBrowserProcessHandler> AppBrowser::GetBrowserProcessHandler()
 
 void AppBrowser::OnContextInitialized()
 {
-    CefWindowInfo info;
-    info.SetAsPopup(NULL, "CEF Window");
+    HWND hWndHolder = m_pMainFrame->GetPageHolder();
+    CRect rect;
+    ::GetClientRect(hWndHolder, &rect);
 
-    CefRefPtr<CefClient> client(new Client());
+    CefWindowInfo info;
+    info.SetAsChild(hWndHolder, rect);
+
+    m_Client = new Client(m_pMainFrame);
 
     CefBrowserSettings browserSettings;
 
-    CefString url = "https://www.streamlet.org/";
-    CefBrowserHost::CreateBrowser(info, client, url, browserSettings, nullptr);
+    CefString url = L"about:blank";
+    CefBrowserHost::CreateBrowser(info, m_Client, url, browserSettings, nullptr);
+
+    m_pMainFrame->SetClient(m_Client);
 }

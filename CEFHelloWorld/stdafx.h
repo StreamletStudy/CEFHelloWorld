@@ -19,6 +19,15 @@
 
 
 // reference additional headers your program requires here
+#include <atlbase.h>
+#include <atlapp.h>
+#include <atlmisc.h>
+#include <atlwin.h>
+#include <atlctrls.h>
+
 #include <include/cef_app.h>
 #include <include/cef_base.h>
 #include <include/cef_client.h>
+
+
+#include "Message.h"

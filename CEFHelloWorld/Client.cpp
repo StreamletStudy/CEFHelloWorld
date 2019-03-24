@@ -7,9 +7,15 @@ CefRefPtr<CefLifeSpanHandler> Client::GetLifeSpanHandler()
     return this;
 }
 
+void Client::OnAfterCreated(CefRefPtr<CefBrowser> browser)
+{
+    m_pMainFrame->SetBrowser(browser);
+}
+
 void Client::OnBeforeClose(CefRefPtr<CefBrowser> browser)
 {
-    CefQuitMessageLoop();
+    m_pMainFrame->SetBrowser(nullptr);
+    m_pMainFrame->SendMessage(WM_CLOSE);
 }
 
 CefRefPtr<CefContextMenuHandler> Client::GetContextMenuHandler()
@@ -52,4 +58,15 @@ void Client::OnLoadEnd(CefRefPtr<CefBrowser> browser,
 
         frame->ExecuteJavaScript(strScript, frame->GetURL(), 0);
     }
+}
+
+CefRefPtr<CefDisplayHandler> Client::GetDisplayHandler()
+{
+    return this;
+}
+
+void Client::OnAddressChange(CefRefPtr<CefBrowser> browser,
+    CefRefPtr<CefFrame> frame, const CefString& url)
+{
+    m_pMainFrame->OnAddressChange(url);
 }

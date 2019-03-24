@@ -2,6 +2,7 @@
 #include "App.h"
 #include "AppBrowser.h"
 #include "AppRenderer.h"
+#include "MainFrame.h"
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_opt_ HINSTANCE hPrevInstance,
@@ -17,9 +18,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     cefCommandLine->InitFromString(::GetCommandLine());
 
     CefRefPtr<CefApp> cefApp = nullptr;
+    std::unique_ptr<MainFrame> mainFrame;
     if (!cefCommandLine->HasSwitch("type"))
     {
-        cefApp = new AppBrowser;
+        mainFrame.reset(new MainFrame);
+        mainFrame->Create();
+        cefApp = new AppBrowser(mainFrame.get());
     }
     else
     {

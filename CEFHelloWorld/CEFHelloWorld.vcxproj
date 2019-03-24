@@ -80,20 +80,20 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)CEF;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)CEF;$(SolutionDir)WTL\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)CEF;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)CEF;$(SolutionDir)WTL\Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)CEF\lib\$(Platform);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)CEF;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)CEF;$(SolutionDir)WTL\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)CEF;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)CEF;$(SolutionDir)WTL\Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)CEF\lib\$(Platform);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -183,20 +183,27 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AddressBar.h" />
     <ClInclude Include="App.h" />
     <ClInclude Include="AppBrowser.h" />
     <ClInclude Include="AppRenderer.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="MainFrame.h" />
+    <ClInclude Include="Message.h" />
+    <ClInclude Include="PageHolder.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AddressBar.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="AppBrowser.cpp" />
     <ClCompile Include="AppRenderer.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MainFrame.cpp" />
+    <ClCompile Include="PageHolder.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
