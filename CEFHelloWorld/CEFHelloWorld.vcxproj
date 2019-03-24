@@ -191,7 +191,8 @@
     <ClInclude Include="MainFrame.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="PageHolder.h" />
-    <ClInclude Include="resource.h" />
+    <ClInclude Include="res\resource.h" />
+    <ClInclude Include="SchemeHandler.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -204,6 +205,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainFrame.cpp" />
     <ClCompile Include="PageHolder.cpp" />
+    <ClCompile Include="SchemeHandler.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -217,10 +219,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="CEFHelloWorld.rc" />
+    <None Include="res\HomePage.html" />
+    <None Include="res\Script.js" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Script.js" />
+    <ResourceCompile Include="res\CEFHelloWorld.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

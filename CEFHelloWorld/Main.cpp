@@ -3,6 +3,7 @@
 #include "AppBrowser.h"
 #include "AppRenderer.h"
 #include "MainFrame.h"
+#include "SchemeHandler.h"
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_opt_ HINSTANCE hPrevInstance,
@@ -49,6 +50,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     cefSettings.no_sandbox = true;
     
     CefInitialize(cefMainArgs, cefSettings, cefApp, nullptr);
+    CefRegisterSchemeHandlerFactory("res", "homepage", new SchemeHandlerFactory());
 
     CefRunMessageLoop();
 

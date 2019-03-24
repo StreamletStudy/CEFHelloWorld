@@ -1,6 +1,6 @@
 #include "stdafx.h"
+#include "res/resource.h"
 #include "Client.h"
-#include "resource.h"
 
 CefRefPtr<CefLifeSpanHandler> Client::GetLifeSpanHandler()
 {

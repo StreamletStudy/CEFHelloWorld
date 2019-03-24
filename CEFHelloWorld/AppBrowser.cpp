@@ -21,7 +21,7 @@ void AppBrowser::OnContextInitialized()
 
     CefBrowserSettings browserSettings;
 
-    CefString url = L"about:blank";
+    CefString url = L"res://homepage";
     CefBrowserHost::CreateBrowser(info, m_Client, url, browserSettings, nullptr);
 
     m_pMainFrame->SetClient(m_Client);

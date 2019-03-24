@@ -3,6 +3,7 @@
 // Used by CEFHelloWorld.rc
 //
 #define IDR_JS                          101
+#define IDR_HOMEPAGE                    102
 
 // Next default values for new objects
 // 
