@@ -25,7 +25,7 @@ bool Client::OnBeforePopup(CefRefPtr<CefBrowser> browser,
     case WOD_NEW_BACKGROUND_TAB:
     case WOD_NEW_POPUP:
     case WOD_NEW_WINDOW:
-        browser->GetMainFrame()->LoadURL(target_url);
+        m_pMainFrame->PopupAndNavigate(target_url);
         return true; //cancel create
     }
 

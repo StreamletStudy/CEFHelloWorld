@@ -1,27 +1,26 @@
 #include "stdafx.h"
+#include "AppBrowser.h"
 #include "MainFrame.h"
+#include "Client.h"
 
 const int ADDRESS_BAR_HEIGHT = 36;
 const int ADDRESS_BAR_MARGIN = 10;
 const int NAVIGATE_BUTTON_WIDTH = 40;
 const int PROGRESS_BAR_HEIGHT = 4;
 
-bool MainFrame::Create()
+bool MainFrame::CreateAndNavigate(CefRefPtr<CefApp> pApp, const std::wstring &strUrl)
 {
+    MainFrame *pMainFrame = new MainFrame(pApp, strUrl);
+
     CRect rcWindow(CW_USEDEFAULT, CW_USEDEFAULT, 0, 0);
-    HWND hWnd = CWindowImpl<MainFrame>::Create(nullptr, &rcWindow, L"CEF Browser", WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE);
+    HWND hWnd = pMainFrame->Create(nullptr, &rcWindow, L"CEF Browser", WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE);
     assert(hWnd != nullptr);
     return true;
 }
 
-HWND MainFrame::GetPageHolder()
+bool MainFrame::PopupAndNavigate(const std::wstring &strUrl)
 {
-    return m_PageHolder;
-}
-
-void MainFrame::SetClient(CefRefPtr<CefClient> client)
-{
-    m_Client = client;
+    return CreateAndNavigate(m_App, strUrl);
 }
 
 void MainFrame::SetBrowser(CefRefPtr<CefBrowser> browser)
@@ -51,13 +50,14 @@ LRESULT MainFrame::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL &bHand
     m_AddressBar.SetFont(m_Font);
     m_PageHolder.SetFont(m_Font);
 
+    dynamic_cast<AppBrowser *>(m_App.get())->OnMainFrameCreated(this);
+
     return 0;
 }
 
-LRESULT MainFrame::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL &bHandled)
+void MainFrame::OnFinalMessage(_In_ HWND /*hWnd*/)
 {
-    CefQuitMessageLoop();
-    return 0;
+    dynamic_cast<AppBrowser *>(m_App.get())->OnMainFrameDestroyed(this);
 }
 
 LRESULT MainFrame::OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL &bHandled)
@@ -117,6 +117,22 @@ LRESULT MainFrame::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL &bHandle
 LRESULT MainFrame::OnEraseBankground(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL &bHandled)
 {
     return TRUE;
+}
+
+LRESULT MainFrame::OnAppContextInitialized(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL &bHandled)
+{
+    CRect rect;
+    m_PageHolder.GetClientRect(&rect);
+
+    CefWindowInfo info;
+    info.SetAsChild(m_PageHolder, rect);
+
+    m_Client = new Client(this);
+
+    CefBrowserSettings browserSettings;
+    CefBrowserHost::CreateBrowser(info, m_Client, m_strUrlOnCreate, browserSettings, nullptr);
+
+    return 0;
 }
 
 LRESULT MainFrame::OnAddressBarEntered(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL &bHandled)

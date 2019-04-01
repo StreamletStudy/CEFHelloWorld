@@ -19,12 +19,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     cefCommandLine->InitFromString(::GetCommandLine());
 
     CefRefPtr<CefApp> cefApp = nullptr;
-    std::unique_ptr<MainFrame> mainFrame;
     if (!cefCommandLine->HasSwitch("type"))
     {
-        mainFrame.reset(new MainFrame);
-        mainFrame->Create();
-        cefApp = new AppBrowser(mainFrame.get());
+        cefApp = new AppBrowser();
+        MainFrame::CreateAndNavigate(cefApp, L"res://homepage");
     }
     else
     {

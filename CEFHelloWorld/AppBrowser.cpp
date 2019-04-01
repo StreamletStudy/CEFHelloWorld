@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "AppBrowser.h"
-#include "Client.h"
 #include "MainFrame.h"
 
 CefRefPtr<CefBrowserProcessHandler> AppBrowser::GetBrowserProcessHandler()
@@ -10,19 +9,29 @@ CefRefPtr<CefBrowserProcessHandler> AppBrowser::GetBrowserProcessHandler()
 
 void AppBrowser::OnContextInitialized()
 {
-    HWND hWndHolder = m_pMainFrame->GetPageHolder();
-    CRect rect;
-    ::GetClientRect(hWndHolder, &rect);
+    m_bInitialized = true;
+    for (auto pMainFrame : m_setMainFrames)
+    {
+        pMainFrame->PostMessage(WM_CONTEXT_INITIALIZED);
+    }
+}
 
-    CefWindowInfo info;
-    info.SetAsChild(hWndHolder, rect);
+void AppBrowser::OnMainFrameCreated(MainFrame *pMainFrame)
+{
+    m_setMainFrames.insert(pMainFrame);
+    if (m_bInitialized)
+    {
+        pMainFrame->PostMessage(WM_CONTEXT_INITIALIZED);
+    }
+}
 
-    m_Client = new Client(m_pMainFrame);
+void AppBrowser::OnMainFrameDestroyed(MainFrame *pMainFrame)
+{
+    m_setMainFrames.erase(pMainFrame);
+    delete pMainFrame;
 
-    CefBrowserSettings browserSettings;
-
-    CefString url = L"res://homepage";
-    CefBrowserHost::CreateBrowser(info, m_Client, url, browserSettings, nullptr);
-
-    m_pMainFrame->SetClient(m_Client);
+    if (m_setMainFrames.empty())
+    {
+        CefQuitMessageLoop();
+    }
 }
