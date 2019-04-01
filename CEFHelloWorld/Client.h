@@ -35,6 +35,8 @@ public:
         CefRefPtr<CefContextMenuParams> params, CefRefPtr<CefMenuModel> model) override;
 
     virtual CefRefPtr<CefLoadHandler> GetLoadHandler() override;
+    virtual void OnLoadingStateChange(CefRefPtr<CefBrowser> browser,
+        bool isLoading, bool canGoBack, bool canGoForward) override;
     virtual void OnLoadEnd(CefRefPtr<CefBrowser> browser,
         CefRefPtr<CefFrame> frame, int httpStatusCode) override;
 

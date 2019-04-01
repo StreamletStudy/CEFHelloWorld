@@ -65,6 +65,12 @@ CefRefPtr<CefLoadHandler> Client::GetLoadHandler()
     return this;
 }
 
+void Client::OnLoadingStateChange(CefRefPtr<CefBrowser> browser,
+    bool isLoading, bool canGoBack, bool canGoForward)
+{
+    m_pMainFrame->OnLoadingStart(canGoBack, canGoForward);
+}
+
 void Client::OnLoadEnd(CefRefPtr<CefBrowser> browser,
     CefRefPtr<CefFrame> frame, int httpStatusCode)
 {
