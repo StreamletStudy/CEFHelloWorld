@@ -26,6 +26,7 @@ public:
         CefWindowInfo& windowInfo,
         CefRefPtr<CefClient>& client,
         CefBrowserSettings& settings,
+        CefRefPtr<CefDictionaryValue>& extra_info,
         bool* no_javascript_access) override;
     virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) override;
     virtual void OnBeforeClose(CefRefPtr<CefBrowser> browser) override;
@@ -49,5 +50,5 @@ public:
 private:
     MainFrame *m_pMainFrame;
 
-    IMPLEMENT_REFCOUNTING(Client)
+    IMPLEMENT_REFCOUNTING(Client);
 };

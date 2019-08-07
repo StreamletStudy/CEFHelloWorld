@@ -17,6 +17,7 @@ bool Client::OnBeforePopup(CefRefPtr<CefBrowser> browser,
     CefWindowInfo& windowInfo,
     CefRefPtr<CefClient>& client,
     CefBrowserSettings& settings,
+    CefRefPtr<CefDictionaryValue>& extra_info,
     bool* no_javascript_access)
 {
     switch (target_disposition)

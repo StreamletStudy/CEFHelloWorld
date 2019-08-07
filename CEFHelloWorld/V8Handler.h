@@ -23,5 +23,5 @@ public:
         CefRefPtr<CefV8Value>& retval,
         CefString& exception) override;
 
-    IMPLEMENT_REFCOUNTING(V8Handler)
+    IMPLEMENT_REFCOUNTING(V8Handler);
 };

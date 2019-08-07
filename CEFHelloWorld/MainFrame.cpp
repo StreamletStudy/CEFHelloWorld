@@ -130,7 +130,7 @@ LRESULT MainFrame::OnAppContextInitialized(UINT uMsg, WPARAM wParam, LPARAM lPar
     m_Client = new Client(this);
 
     CefBrowserSettings browserSettings;
-    CefBrowserHost::CreateBrowser(info, m_Client, m_strUrlOnCreate, browserSettings, nullptr);
+    CefBrowserHost::CreateBrowser(info, m_Client, m_strUrlOnCreate, browserSettings, nullptr, nullptr);
 
     return 0;
 }

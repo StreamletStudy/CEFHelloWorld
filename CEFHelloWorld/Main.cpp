@@ -48,7 +48,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     cefSettings.no_sandbox = true;
     
     CefInitialize(cefMainArgs, cefSettings, cefApp, nullptr);
-    CefRegisterSchemeHandlerFactory("res", "homepage", new SchemeHandlerFactory());
+    CefRegisterSchemeHandlerFactory("res", "", new SchemeHandlerFactory());
 
     CefRunMessageLoop();
 
