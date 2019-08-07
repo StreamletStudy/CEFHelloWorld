@@ -9,11 +9,12 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=b25ff95e39d77a42daa4be355bbfaafc0d0e9e53$
+// $hash=1493fbfb84ff6ae04fdf32299ea635f41845a9f3$
 //
 
 #include "libcef_dll/cpptoc/keyboard_handler_cpptoc.h"
 #include "libcef_dll/ctocpp/browser_ctocpp.h"
+#include "libcef_dll/shutdown_checker.h"
 
 namespace {
 
@@ -25,6 +26,8 @@ keyboard_handler_on_pre_key_event(struct _cef_keyboard_handler_t* self,
                                   const struct _cef_key_event_t* event,
                                   cef_event_handle_t os_event,
                                   int* is_keyboard_shortcut) {
+  shutdown_checker::AssertNotShutdown();
+
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   DCHECK(self);
@@ -69,6 +72,8 @@ keyboard_handler_on_key_event(struct _cef_keyboard_handler_t* self,
                               cef_browser_t* browser,
                               const struct _cef_key_event_t* event,
                               cef_event_handle_t os_event) {
+  shutdown_checker::AssertNotShutdown();
+
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   DCHECK(self);
@@ -105,6 +110,12 @@ CefKeyboardHandlerCppToC::CefKeyboardHandlerCppToC() {
   GetStruct()->on_key_event = keyboard_handler_on_key_event;
 }
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefKeyboardHandlerCppToC::~CefKeyboardHandlerCppToC() {
+  shutdown_checker::AssertNotShutdown();
+}
+
 template <>
 CefRefPtr<CefKeyboardHandler> CefCppToCRefCounted<
     CefKeyboardHandlerCppToC,
@@ -114,14 +125,6 @@ CefRefPtr<CefKeyboardHandler> CefCppToCRefCounted<
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCppToCRefCounted<CefKeyboardHandlerCppToC,
-                                         CefKeyboardHandler,
-                                         cef_keyboard_handler_t>::DebugObjCt
-    ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCppToCRefCounted<CefKeyboardHandlerCppToC,

@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=0623242c16db04c2964cca648a6fd0b9f35662b5$
+// $hash=0e24c6b07a7377337132b09396d9e5f3e4eca517$
 //
 
 #include "libcef_dll/ctocpp/command_line_ctocpp.h"
@@ -418,6 +418,10 @@ void CefCommandLineCToCpp::PrependWrapper(const CefString& wrapper) {
 
 CefCommandLineCToCpp::CefCommandLineCToCpp() {}
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefCommandLineCToCpp::~CefCommandLineCToCpp() {}
+
 template <>
 cef_command_line_t*
 CefCToCppRefCounted<CefCommandLineCToCpp, CefCommandLine, cef_command_line_t>::
@@ -425,14 +429,6 @@ CefCToCppRefCounted<CefCommandLineCToCpp, CefCommandLine, cef_command_line_t>::
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCToCppRefCounted<CefCommandLineCToCpp,
-                                         CefCommandLine,
-                                         cef_command_line_t>::DebugObjCt
-    ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCToCppRefCounted<CefCommandLineCToCpp,

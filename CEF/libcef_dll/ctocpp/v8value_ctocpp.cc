@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=700904d273996990c0c0130f5043df492fb1ad76$
+// $hash=621b70f6047c604a9838143327d30b0eca3b8ee8$
 //
 
 #include "libcef_dll/ctocpp/v8value_ctocpp.h"
@@ -847,8 +847,8 @@ NO_SANITIZE("cfi-icall") int CefV8ValueCToCpp::GetArrayLength() {
 }
 
 NO_SANITIZE("cfi-icall")
-CefRefPtr<CefV8ArrayBufferReleaseCallback> CefV8ValueCToCpp::
-    GetArrayBufferReleaseCallback() {
+CefRefPtr<CefV8ArrayBufferReleaseCallback>
+CefV8ValueCToCpp::GetArrayBufferReleaseCallback() {
   cef_v8value_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_array_buffer_release_callback))
     return NULL;
@@ -992,6 +992,10 @@ CefRefPtr<CefV8Value> CefV8ValueCToCpp::ExecuteFunctionWithContext(
 
 CefV8ValueCToCpp::CefV8ValueCToCpp() {}
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefV8ValueCToCpp::~CefV8ValueCToCpp() {}
+
 template <>
 cef_v8value_t*
 CefCToCppRefCounted<CefV8ValueCToCpp, CefV8Value, cef_v8value_t>::UnwrapDerived(
@@ -1000,13 +1004,6 @@ CefCToCppRefCounted<CefV8ValueCToCpp, CefV8Value, cef_v8value_t>::UnwrapDerived(
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount
-    CefCToCppRefCounted<CefV8ValueCToCpp, CefV8Value, cef_v8value_t>::DebugObjCt
-        ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCToCppRefCounted<CefV8ValueCToCpp,

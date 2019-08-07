@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=a4dc585544b1b40d19e00a0ec37e7b21f792139f$
+// $hash=c08c701ad13790067983a7b5eb964975bc1f186b$
 //
 
 #ifndef CEF_LIBCEF_DLL_CTOCPP_COOKIE_MANAGER_CTOCPP_H_
@@ -33,9 +33,11 @@ class CefCookieManagerCToCpp
                                  cef_cookie_manager_t> {
  public:
   CefCookieManagerCToCpp();
+  virtual ~CefCookieManagerCToCpp();
 
   // CefCookieManager methods.
   void SetSupportedSchemes(const std::vector<CefString>& schemes,
+                           bool include_defaults,
                            CefRefPtr<CefCompletionCallback> callback) OVERRIDE;
   bool VisitAllCookies(CefRefPtr<CefCookieVisitor> visitor) OVERRIDE;
   bool VisitUrlCookies(const CefString& url,
@@ -47,9 +49,6 @@ class CefCookieManagerCToCpp
   bool DeleteCookies(const CefString& url,
                      const CefString& cookie_name,
                      CefRefPtr<CefDeleteCookiesCallback> callback) OVERRIDE;
-  bool SetStoragePath(const CefString& path,
-                      bool persist_session_cookies,
-                      CefRefPtr<CefCompletionCallback> callback) OVERRIDE;
   bool FlushStore(CefRefPtr<CefCompletionCallback> callback) OVERRIDE;
 };
 

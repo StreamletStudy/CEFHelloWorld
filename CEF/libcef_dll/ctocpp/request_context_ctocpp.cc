@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=b70e87a5f87deaf74d8b2628cc71571e87fcfb96$
+// $hash=5036c24365fa0fdb3d7efc54670f3123a7104fa0$
 //
 
 #include "libcef_dll/ctocpp/request_context_ctocpp.h"
@@ -165,10 +165,10 @@ NO_SANITIZE("cfi-icall") CefString CefRequestContextCToCpp::GetCachePath() {
 }
 
 NO_SANITIZE("cfi-icall")
-CefRefPtr<CefCookieManager> CefRequestContextCToCpp::GetDefaultCookieManager(
+CefRefPtr<CefCookieManager> CefRequestContextCToCpp::GetCookieManager(
     CefRefPtr<CefCompletionCallback> callback) {
   cef_request_context_t* _struct = GetStruct();
-  if (CEF_MEMBER_MISSING(_struct, get_default_cookie_manager))
+  if (CEF_MEMBER_MISSING(_struct, get_cookie_manager))
     return NULL;
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
@@ -176,7 +176,7 @@ CefRefPtr<CefCookieManager> CefRequestContextCToCpp::GetDefaultCookieManager(
   // Unverified params: callback
 
   // Execute
-  cef_cookie_manager_t* _retval = _struct->get_default_cookie_manager(
+  cef_cookie_manager_t* _retval = _struct->get_cookie_manager(
       _struct, CefCompletionCallbackCppToC::Wrap(callback));
 
   // Return type: refptr_same
@@ -356,6 +356,22 @@ void CefRequestContextCToCpp::ClearCertificateExceptions(
 }
 
 NO_SANITIZE("cfi-icall")
+void CefRequestContextCToCpp::ClearHttpAuthCredentials(
+    CefRefPtr<CefCompletionCallback> callback) {
+  cef_request_context_t* _struct = GetStruct();
+  if (CEF_MEMBER_MISSING(_struct, clear_http_auth_credentials))
+    return;
+
+  // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
+
+  // Unverified params: callback
+
+  // Execute
+  _struct->clear_http_auth_credentials(
+      _struct, CefCompletionCallbackCppToC::Wrap(callback));
+}
+
+NO_SANITIZE("cfi-icall")
 void CefRequestContextCToCpp::CloseAllConnections(
     CefRefPtr<CefCompletionCallback> callback) {
   cef_request_context_t* _struct = GetStruct();
@@ -393,42 +409,6 @@ void CefRequestContextCToCpp::ResolveHost(
   // Execute
   _struct->resolve_host(_struct, origin.GetStruct(),
                         CefResolveCallbackCppToC::Wrap(callback));
-}
-
-NO_SANITIZE("cfi-icall")
-cef_errorcode_t CefRequestContextCToCpp::ResolveHostCached(
-    const CefString& origin,
-    std::vector<CefString>& resolved_ips) {
-  cef_request_context_t* _struct = GetStruct();
-  if (CEF_MEMBER_MISSING(_struct, resolve_host_cached))
-    return ERR_FAILED;
-
-  // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
-
-  // Verify param: origin; type: string_byref_const
-  DCHECK(!origin.empty());
-  if (origin.empty())
-    return ERR_FAILED;
-
-  // Translate param: resolved_ips; type: string_vec_byref
-  cef_string_list_t resolved_ipsList = cef_string_list_alloc();
-  DCHECK(resolved_ipsList);
-  if (resolved_ipsList)
-    transfer_string_list_contents(resolved_ips, resolved_ipsList);
-
-  // Execute
-  cef_errorcode_t _retval = _struct->resolve_host_cached(
-      _struct, origin.GetStruct(), resolved_ipsList);
-
-  // Restore param:resolved_ips; type: string_vec_byref
-  if (resolved_ipsList) {
-    resolved_ips.clear();
-    transfer_string_list_contents(resolved_ipsList, resolved_ips);
-    cef_string_list_free(resolved_ipsList);
-  }
-
-  // Return type: simple
-  return _retval;
 }
 
 NO_SANITIZE("cfi-icall")
@@ -549,6 +529,10 @@ CefRefPtr<CefExtension> CefRequestContextCToCpp::GetExtension(
 
 CefRequestContextCToCpp::CefRequestContextCToCpp() {}
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefRequestContextCToCpp::~CefRequestContextCToCpp() {}
+
 template <>
 cef_request_context_t* CefCToCppRefCounted<
     CefRequestContextCToCpp,
@@ -558,14 +542,6 @@ cef_request_context_t* CefCToCppRefCounted<
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCToCppRefCounted<CefRequestContextCToCpp,
-                                         CefRequestContext,
-                                         cef_request_context_t>::DebugObjCt
-    ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCToCppRefCounted<CefRequestContextCToCpp,

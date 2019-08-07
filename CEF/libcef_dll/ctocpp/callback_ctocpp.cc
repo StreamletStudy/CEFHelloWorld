@@ -9,14 +9,17 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=d3fdd40153d21d06a0797791a71ac877dc8563d0$
+// $hash=6b39d5523fb9c72765cf7e3601867bbacd4d284c$
 //
 
 #include "libcef_dll/ctocpp/callback_ctocpp.h"
+#include "libcef_dll/shutdown_checker.h"
 
 // VIRTUAL METHODS - Body may be edited by hand.
 
 NO_SANITIZE("cfi-icall") void CefCallbackCToCpp::Continue() {
+  shutdown_checker::AssertNotShutdown();
+
   cef_callback_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, cont))
     return;
@@ -28,6 +31,8 @@ NO_SANITIZE("cfi-icall") void CefCallbackCToCpp::Continue() {
 }
 
 NO_SANITIZE("cfi-icall") void CefCallbackCToCpp::Cancel() {
+  shutdown_checker::AssertNotShutdown();
+
   cef_callback_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, cancel))
     return;
@@ -42,6 +47,12 @@ NO_SANITIZE("cfi-icall") void CefCallbackCToCpp::Cancel() {
 
 CefCallbackCToCpp::CefCallbackCToCpp() {}
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefCallbackCToCpp::~CefCallbackCToCpp() {
+  shutdown_checker::AssertNotShutdown();
+}
+
 template <>
 cef_callback_t*
 CefCToCppRefCounted<CefCallbackCToCpp, CefCallback, cef_callback_t>::
@@ -49,13 +60,6 @@ CefCToCppRefCounted<CefCallbackCToCpp, CefCallback, cef_callback_t>::
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount
-    CefCToCppRefCounted<CefCallbackCToCpp, CefCallback, cef_callback_t>::
-        DebugObjCt ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCToCppRefCounted<CefCallbackCToCpp,

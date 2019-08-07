@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=490d23f7d9acf2de28ebeb000524fafcad1d989c$
+// $hash=49595399449ffeefb4c4855f5d262f83cabe56b5$
 //
 
 #include "libcef_dll/ctocpp/test/translator_test_scoped_library_ctocpp.h"
@@ -19,8 +19,8 @@
 // STATIC METHODS - Body may be edited by hand.
 
 NO_SANITIZE("cfi-icall")
-CefOwnPtr<CefTranslatorTestScopedLibrary> CefTranslatorTestScopedLibrary::
-    Create(int value) {
+CefOwnPtr<CefTranslatorTestScopedLibrary>
+CefTranslatorTestScopedLibrary::Create(int value) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Execute
@@ -62,6 +62,10 @@ void CefTranslatorTestScopedLibraryCToCpp::SetValue(int value) {
 // CONSTRUCTOR - Do not edit by hand.
 
 CefTranslatorTestScopedLibraryCToCpp::CefTranslatorTestScopedLibraryCToCpp() {}
+
+// DESTRUCTOR - Do not edit by hand.
+
+CefTranslatorTestScopedLibraryCToCpp::~CefTranslatorTestScopedLibraryCToCpp() {}
 
 template <>
 cef_translator_test_scoped_library_t*
@@ -112,14 +116,6 @@ CefCToCppScoped<CefTranslatorTestScopedLibraryCToCpp,
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCToCppScoped<
-    CefTranslatorTestScopedLibraryCToCpp,
-    CefTranslatorTestScopedLibrary,
-    cef_translator_test_scoped_library_t>::DebugObjCt ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType

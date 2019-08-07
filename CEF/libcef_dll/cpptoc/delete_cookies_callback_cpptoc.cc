@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=1064107d05675f032c5b64fb376f301af01e03c8$
+// $hash=0b3b80f715c561227e286098b88b8dbe2acc84a1$
 //
 
 #include "libcef_dll/cpptoc/delete_cookies_callback_cpptoc.h"
+#include "libcef_dll/shutdown_checker.h"
 
 namespace {
 
@@ -21,6 +22,8 @@ namespace {
 void CEF_CALLBACK
 delete_cookies_callback_on_complete(struct _cef_delete_cookies_callback_t* self,
                                     int num_deleted) {
+  shutdown_checker::AssertNotShutdown();
+
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   DCHECK(self);
@@ -39,6 +42,12 @@ CefDeleteCookiesCallbackCppToC::CefDeleteCookiesCallbackCppToC() {
   GetStruct()->on_complete = delete_cookies_callback_on_complete;
 }
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefDeleteCookiesCallbackCppToC::~CefDeleteCookiesCallbackCppToC() {
+  shutdown_checker::AssertNotShutdown();
+}
+
 template <>
 CefRefPtr<CefDeleteCookiesCallback> CefCppToCRefCounted<
     CefDeleteCookiesCallbackCppToC,
@@ -49,14 +58,6 @@ CefRefPtr<CefDeleteCookiesCallback> CefCppToCRefCounted<
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCppToCRefCounted<
-    CefDeleteCookiesCallbackCppToC,
-    CefDeleteCookiesCallback,
-    cef_delete_cookies_callback_t>::DebugObjCt ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType

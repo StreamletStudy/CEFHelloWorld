@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=7b72089e8ee155c1b2dee881fb63ab65f6c0fc71$
+// $hash=7158e06e5c71ed020f193c698a2fdfd6d0b170c8$
 //
 
 #ifndef CEF_LIBCEF_DLL_CPPTOC_AUDIO_HANDLER_CPPTOC_H_
@@ -31,6 +31,7 @@ class CefAudioHandlerCppToC : public CefCppToCRefCounted<CefAudioHandlerCppToC,
                                                          cef_audio_handler_t> {
  public:
   CefAudioHandlerCppToC();
+  virtual ~CefAudioHandlerCppToC();
 };
 
 #endif  // CEF_LIBCEF_DLL_CPPTOC_AUDIO_HANDLER_CPPTOC_H_

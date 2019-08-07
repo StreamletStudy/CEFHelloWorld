@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=47b12230d85a8cb21c4d1d76a5dff05b36f39a19$
+// $hash=0c197661e7e3e905b90bec127ff7b1ff23240fa2$
 //
 
 #include "libcef_dll/ctocpp/response_ctocpp.h"
@@ -118,10 +118,7 @@ void CefResponseCToCpp::SetStatusText(const CefString& statusText) {
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
-  // Verify param: statusText; type: string_byref_const
-  DCHECK(!statusText.empty());
-  if (statusText.empty())
-    return;
+  // Unverified params: statusText
 
   // Execute
   _struct->set_status_text(_struct, statusText.GetStruct());
@@ -151,13 +148,40 @@ void CefResponseCToCpp::SetMimeType(const CefString& mimeType) {
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
-  // Verify param: mimeType; type: string_byref_const
-  DCHECK(!mimeType.empty());
-  if (mimeType.empty())
-    return;
+  // Unverified params: mimeType
 
   // Execute
   _struct->set_mime_type(_struct, mimeType.GetStruct());
+}
+
+NO_SANITIZE("cfi-icall") CefString CefResponseCToCpp::GetCharset() {
+  cef_response_t* _struct = GetStruct();
+  if (CEF_MEMBER_MISSING(_struct, get_charset))
+    return CefString();
+
+  // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
+
+  // Execute
+  cef_string_userfree_t _retval = _struct->get_charset(_struct);
+
+  // Return type: string
+  CefString _retvalStr;
+  _retvalStr.AttachToUserFree(_retval);
+  return _retvalStr;
+}
+
+NO_SANITIZE("cfi-icall")
+void CefResponseCToCpp::SetCharset(const CefString& charset) {
+  cef_response_t* _struct = GetStruct();
+  if (CEF_MEMBER_MISSING(_struct, set_charset))
+    return;
+
+  // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
+
+  // Unverified params: charset
+
+  // Execute
+  _struct->set_charset(_struct, charset.GetStruct());
 }
 
 NO_SANITIZE("cfi-icall")
@@ -253,10 +277,7 @@ NO_SANITIZE("cfi-icall") void CefResponseCToCpp::SetURL(const CefString& url) {
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
-  // Verify param: url; type: string_byref_const
-  DCHECK(!url.empty());
-  if (url.empty())
-    return;
+  // Unverified params: url
 
   // Execute
   _struct->set_url(_struct, url.GetStruct());
@@ -266,6 +287,10 @@ NO_SANITIZE("cfi-icall") void CefResponseCToCpp::SetURL(const CefString& url) {
 
 CefResponseCToCpp::CefResponseCToCpp() {}
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefResponseCToCpp::~CefResponseCToCpp() {}
+
 template <>
 cef_response_t*
 CefCToCppRefCounted<CefResponseCToCpp, CefResponse, cef_response_t>::
@@ -273,13 +298,6 @@ CefCToCppRefCounted<CefResponseCToCpp, CefResponse, cef_response_t>::
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount
-    CefCToCppRefCounted<CefResponseCToCpp, CefResponse, cef_response_t>::
-        DebugObjCt ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCToCppRefCounted<CefResponseCToCpp,

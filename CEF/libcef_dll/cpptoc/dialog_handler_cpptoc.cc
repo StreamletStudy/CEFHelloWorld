@@ -9,12 +9,13 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=3b87898a5d6b6e4c7ee74b63280a1599f8d1b16b$
+// $hash=76ce77c2503ece27838b7b83d3e5644d76a48a2d$
 //
 
 #include "libcef_dll/cpptoc/dialog_handler_cpptoc.h"
 #include "libcef_dll/ctocpp/browser_ctocpp.h"
 #include "libcef_dll/ctocpp/file_dialog_callback_ctocpp.h"
+#include "libcef_dll/shutdown_checker.h"
 #include "libcef_dll/transfer_util.h"
 
 namespace {
@@ -30,6 +31,8 @@ dialog_handler_on_file_dialog(struct _cef_dialog_handler_t* self,
                               cef_string_list_t accept_filters,
                               int selected_accept_filter,
                               cef_file_dialog_callback_t* callback) {
+  shutdown_checker::AssertNotShutdown();
+
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   DCHECK(self);
@@ -71,6 +74,12 @@ CefDialogHandlerCppToC::CefDialogHandlerCppToC() {
   GetStruct()->on_file_dialog = dialog_handler_on_file_dialog;
 }
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefDialogHandlerCppToC::~CefDialogHandlerCppToC() {
+  shutdown_checker::AssertNotShutdown();
+}
+
 template <>
 CefRefPtr<CefDialogHandler> CefCppToCRefCounted<
     CefDialogHandlerCppToC,
@@ -80,14 +89,6 @@ CefRefPtr<CefDialogHandler> CefCppToCRefCounted<
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCppToCRefCounted<CefDialogHandlerCppToC,
-                                         CefDialogHandler,
-                                         cef_dialog_handler_t>::DebugObjCt
-    ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCppToCRefCounted<CefDialogHandlerCppToC,

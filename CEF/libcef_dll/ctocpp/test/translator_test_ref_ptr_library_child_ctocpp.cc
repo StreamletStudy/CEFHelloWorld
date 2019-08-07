@@ -9,18 +9,20 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=8e84654b0f8ed2388392637114e95988af23f6e0$
+// $hash=23e80faef7d16df6eed546e6fd8d1c731c8b8009$
 //
 
 #include "libcef_dll/ctocpp/test/translator_test_ref_ptr_library_child_ctocpp.h"
 #include "libcef_dll/ctocpp/test/translator_test_ref_ptr_library_child_child_ctocpp.h"
+#include "libcef_dll/shutdown_checker.h"
 
 // STATIC METHODS - Body may be edited by hand.
 
 NO_SANITIZE("cfi-icall")
-CefRefPtr<
-    CefTranslatorTestRefPtrLibraryChild> CefTranslatorTestRefPtrLibraryChild::
-    Create(int value, int other_value) {
+CefRefPtr<CefTranslatorTestRefPtrLibraryChild>
+CefTranslatorTestRefPtrLibraryChild::Create(int value, int other_value) {
+  shutdown_checker::AssertNotShutdown();
+
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Execute
@@ -35,6 +37,8 @@ CefRefPtr<
 
 NO_SANITIZE("cfi-icall")
 int CefTranslatorTestRefPtrLibraryChildCToCpp::GetOtherValue() {
+  shutdown_checker::AssertNotShutdown();
+
   cef_translator_test_ref_ptr_library_child_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_other_value))
     return 0;
@@ -50,6 +54,8 @@ int CefTranslatorTestRefPtrLibraryChildCToCpp::GetOtherValue() {
 
 NO_SANITIZE("cfi-icall")
 void CefTranslatorTestRefPtrLibraryChildCToCpp::SetOtherValue(int value) {
+  shutdown_checker::AssertNotShutdown();
+
   cef_translator_test_ref_ptr_library_child_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, set_other_value))
     return;
@@ -62,6 +68,8 @@ void CefTranslatorTestRefPtrLibraryChildCToCpp::SetOtherValue(int value) {
 
 NO_SANITIZE("cfi-icall")
 int CefTranslatorTestRefPtrLibraryChildCToCpp::GetValue() {
+  shutdown_checker::AssertNotShutdown();
+
   cef_translator_test_ref_ptr_library_t* _struct =
       reinterpret_cast<cef_translator_test_ref_ptr_library_t*>(GetStruct());
   if (CEF_MEMBER_MISSING(_struct, get_value))
@@ -78,6 +86,8 @@ int CefTranslatorTestRefPtrLibraryChildCToCpp::GetValue() {
 
 NO_SANITIZE("cfi-icall")
 void CefTranslatorTestRefPtrLibraryChildCToCpp::SetValue(int value) {
+  shutdown_checker::AssertNotShutdown();
+
   cef_translator_test_ref_ptr_library_t* _struct =
       reinterpret_cast<cef_translator_test_ref_ptr_library_t*>(GetStruct());
   if (CEF_MEMBER_MISSING(_struct, set_value))
@@ -94,6 +104,13 @@ void CefTranslatorTestRefPtrLibraryChildCToCpp::SetValue(int value) {
 CefTranslatorTestRefPtrLibraryChildCToCpp::
     CefTranslatorTestRefPtrLibraryChildCToCpp() {}
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefTranslatorTestRefPtrLibraryChildCToCpp::
+    ~CefTranslatorTestRefPtrLibraryChildCToCpp() {
+  shutdown_checker::AssertNotShutdown();
+}
+
 template <>
 cef_translator_test_ref_ptr_library_child_t*
 CefCToCppRefCounted<CefTranslatorTestRefPtrLibraryChildCToCpp,
@@ -108,14 +125,6 @@ CefCToCppRefCounted<CefTranslatorTestRefPtrLibraryChildCToCpp,
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCToCppRefCounted<
-    CefTranslatorTestRefPtrLibraryChildCToCpp,
-    CefTranslatorTestRefPtrLibraryChild,
-    cef_translator_test_ref_ptr_library_child_t>::DebugObjCt ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCToCppRefCounted<

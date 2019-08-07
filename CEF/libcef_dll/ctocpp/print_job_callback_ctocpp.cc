@@ -9,14 +9,17 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=0435585cf71c7cb630cdf8d4f14e5ac8f6f999f2$
+// $hash=b0ed33c450ad41c79603569f45cce2a6efdc2874$
 //
 
 #include "libcef_dll/ctocpp/print_job_callback_ctocpp.h"
+#include "libcef_dll/shutdown_checker.h"
 
 // VIRTUAL METHODS - Body may be edited by hand.
 
 NO_SANITIZE("cfi-icall") void CefPrintJobCallbackCToCpp::Continue() {
+  shutdown_checker::AssertNotShutdown();
+
   cef_print_job_callback_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, cont))
     return;
@@ -31,6 +34,12 @@ NO_SANITIZE("cfi-icall") void CefPrintJobCallbackCToCpp::Continue() {
 
 CefPrintJobCallbackCToCpp::CefPrintJobCallbackCToCpp() {}
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefPrintJobCallbackCToCpp::~CefPrintJobCallbackCToCpp() {
+  shutdown_checker::AssertNotShutdown();
+}
+
 template <>
 cef_print_job_callback_t* CefCToCppRefCounted<
     CefPrintJobCallbackCToCpp,
@@ -40,14 +49,6 @@ cef_print_job_callback_t* CefCToCppRefCounted<
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCToCppRefCounted<CefPrintJobCallbackCToCpp,
-                                         CefPrintJobCallback,
-                                         cef_print_job_callback_t>::DebugObjCt
-    ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCToCppRefCounted<CefPrintJobCallbackCToCpp,

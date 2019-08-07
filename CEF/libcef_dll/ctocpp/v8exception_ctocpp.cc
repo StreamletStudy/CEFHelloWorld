@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=400342415189c9fb509f144b0ed74e28419deb16$
+// $hash=5c7db7eeb6702e6654ef290cbac7eb38aaac7f1c$
 //
 
 #include "libcef_dll/ctocpp/v8exception_ctocpp.h"
@@ -139,6 +139,10 @@ NO_SANITIZE("cfi-icall") int CefV8ExceptionCToCpp::GetEndColumn() {
 
 CefV8ExceptionCToCpp::CefV8ExceptionCToCpp() {}
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefV8ExceptionCToCpp::~CefV8ExceptionCToCpp() {}
+
 template <>
 cef_v8exception_t*
 CefCToCppRefCounted<CefV8ExceptionCToCpp, CefV8Exception, cef_v8exception_t>::
@@ -146,14 +150,6 @@ CefCToCppRefCounted<CefV8ExceptionCToCpp, CefV8Exception, cef_v8exception_t>::
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCToCppRefCounted<CefV8ExceptionCToCpp,
-                                         CefV8Exception,
-                                         cef_v8exception_t>::DebugObjCt
-    ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCToCppRefCounted<CefV8ExceptionCToCpp,

@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=f42212334c625272aa1650179293a6d0fdacc307$
+// $hash=793eb79238372d2070e4e60673dbf65346999b31$
 //
 
 #include "libcef_dll/ctocpp/v8stack_frame_ctocpp.h"
@@ -140,6 +140,10 @@ NO_SANITIZE("cfi-icall") bool CefV8StackFrameCToCpp::IsConstructor() {
 
 CefV8StackFrameCToCpp::CefV8StackFrameCToCpp() {}
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefV8StackFrameCToCpp::~CefV8StackFrameCToCpp() {}
+
 template <>
 cef_v8stack_frame_t*
 CefCToCppRefCounted<CefV8StackFrameCToCpp,
@@ -149,14 +153,6 @@ CefCToCppRefCounted<CefV8StackFrameCToCpp,
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCToCppRefCounted<CefV8StackFrameCToCpp,
-                                         CefV8StackFrame,
-                                         cef_v8stack_frame_t>::DebugObjCt
-    ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCToCppRefCounted<CefV8StackFrameCToCpp,

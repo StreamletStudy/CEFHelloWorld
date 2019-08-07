@@ -9,17 +9,20 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=b257247c1eab4ebd5796b5bc81670d437486d76f$
+// $hash=29ed31b8d18e1bad8d1419b8b147ee958be056f6$
 //
 
 #include "libcef_dll/ctocpp/print_dialog_callback_ctocpp.h"
 #include "libcef_dll/ctocpp/print_settings_ctocpp.h"
+#include "libcef_dll/shutdown_checker.h"
 
 // VIRTUAL METHODS - Body may be edited by hand.
 
 NO_SANITIZE("cfi-icall")
 void CefPrintDialogCallbackCToCpp::Continue(
     CefRefPtr<CefPrintSettings> settings) {
+  shutdown_checker::AssertNotShutdown();
+
   cef_print_dialog_callback_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, cont))
     return;
@@ -36,6 +39,8 @@ void CefPrintDialogCallbackCToCpp::Continue(
 }
 
 NO_SANITIZE("cfi-icall") void CefPrintDialogCallbackCToCpp::Cancel() {
+  shutdown_checker::AssertNotShutdown();
+
   cef_print_dialog_callback_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, cancel))
     return;
@@ -50,6 +55,12 @@ NO_SANITIZE("cfi-icall") void CefPrintDialogCallbackCToCpp::Cancel() {
 
 CefPrintDialogCallbackCToCpp::CefPrintDialogCallbackCToCpp() {}
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefPrintDialogCallbackCToCpp::~CefPrintDialogCallbackCToCpp() {
+  shutdown_checker::AssertNotShutdown();
+}
+
 template <>
 cef_print_dialog_callback_t* CefCToCppRefCounted<
     CefPrintDialogCallbackCToCpp,
@@ -59,14 +70,6 @@ cef_print_dialog_callback_t* CefCToCppRefCounted<
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCToCppRefCounted<
-    CefPrintDialogCallbackCToCpp,
-    CefPrintDialogCallback,
-    cef_print_dialog_callback_t>::DebugObjCt ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCToCppRefCounted<CefPrintDialogCallbackCToCpp,

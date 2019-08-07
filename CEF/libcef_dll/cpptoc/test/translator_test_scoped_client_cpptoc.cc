@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=f06aa2536b2c7d6bd3defdb5ce24a38062c7c2df$
+// $hash=dcc8b483920f60ab8b9b2ba533d7bfd05b6b6f0f$
 //
 
 #include "libcef_dll/cpptoc/test/translator_test_scoped_client_cpptoc.h"
@@ -42,6 +42,10 @@ CefTranslatorTestScopedClientCppToC::CefTranslatorTestScopedClientCppToC() {
   GetStruct()->get_value = translator_test_scoped_client_get_value;
 }
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefTranslatorTestScopedClientCppToC::~CefTranslatorTestScopedClientCppToC() {}
+
 template <>
 CefOwnPtr<CefTranslatorTestScopedClient>
 CefCppToCScoped<CefTranslatorTestScopedClientCppToC,
@@ -73,14 +77,6 @@ CefCppToCScoped<CefTranslatorTestScopedClientCppToC,
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCppToCScoped<
-    CefTranslatorTestScopedClientCppToC,
-    CefTranslatorTestScopedClient,
-    cef_translator_test_scoped_client_t>::DebugObjCt ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType

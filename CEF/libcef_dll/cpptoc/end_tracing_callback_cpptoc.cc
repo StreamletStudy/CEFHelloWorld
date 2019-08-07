@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=a19cac14ca6d1a334920a83e092ff2accb7a0d4c$
+// $hash=2b002577e48c487b99031dbe70665ee2b0d5f299$
 //
 
 #include "libcef_dll/cpptoc/end_tracing_callback_cpptoc.h"
+#include "libcef_dll/shutdown_checker.h"
 
 namespace {
 
@@ -21,6 +22,8 @@ namespace {
 void CEF_CALLBACK end_tracing_callback_on_end_tracing_complete(
     struct _cef_end_tracing_callback_t* self,
     const cef_string_t* tracing_file) {
+  shutdown_checker::AssertNotShutdown();
+
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   DCHECK(self);
@@ -45,6 +48,12 @@ CefEndTracingCallbackCppToC::CefEndTracingCallbackCppToC() {
       end_tracing_callback_on_end_tracing_complete;
 }
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefEndTracingCallbackCppToC::~CefEndTracingCallbackCppToC() {
+  shutdown_checker::AssertNotShutdown();
+}
+
 template <>
 CefRefPtr<CefEndTracingCallback> CefCppToCRefCounted<
     CefEndTracingCallbackCppToC,
@@ -54,14 +63,6 @@ CefRefPtr<CefEndTracingCallback> CefCppToCRefCounted<
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCppToCRefCounted<CefEndTracingCallbackCppToC,
-                                         CefEndTracingCallback,
-                                         cef_end_tracing_callback_t>::DebugObjCt
-    ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCppToCRefCounted<CefEndTracingCallbackCppToC,

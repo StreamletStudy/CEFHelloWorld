@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=122eea25273a143a2fc5aa7a8878839f5988d81b$
+// $hash=3312cb333052eb2fa99a73fc863d918b385954f5$
 //
 
 #include "libcef_dll/cpptoc/v8array_buffer_release_callback_cpptoc.h"
@@ -43,6 +43,11 @@ CefV8ArrayBufferReleaseCallbackCppToC::CefV8ArrayBufferReleaseCallbackCppToC() {
   GetStruct()->release_buffer = v8array_buffer_release_callback_release_buffer;
 }
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefV8ArrayBufferReleaseCallbackCppToC::
+    ~CefV8ArrayBufferReleaseCallbackCppToC() {}
+
 template <>
 CefRefPtr<CefV8ArrayBufferReleaseCallback>
 CefCppToCRefCounted<CefV8ArrayBufferReleaseCallbackCppToC,
@@ -53,14 +58,6 @@ CefCppToCRefCounted<CefV8ArrayBufferReleaseCallbackCppToC,
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCppToCRefCounted<
-    CefV8ArrayBufferReleaseCallbackCppToC,
-    CefV8ArrayBufferReleaseCallback,
-    cef_v8array_buffer_release_callback_t>::DebugObjCt ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType

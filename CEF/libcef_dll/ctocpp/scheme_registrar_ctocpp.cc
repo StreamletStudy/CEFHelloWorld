@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=caa6e377d0a5fb63cb6663daf5e0651d7cc7db00$
+// $hash=b114df75241a43b240b00eb12509473eaa492dd0$
 //
 
 #include "libcef_dll/ctocpp/scheme_registrar_ctocpp.h"
@@ -42,6 +42,10 @@ bool CefSchemeRegistrarCToCpp::AddCustomScheme(const CefString& scheme_name,
 
 CefSchemeRegistrarCToCpp::CefSchemeRegistrarCToCpp() {}
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefSchemeRegistrarCToCpp::~CefSchemeRegistrarCToCpp() {}
+
 template <>
 cef_scheme_registrar_t* CefCToCppScoped<
     CefSchemeRegistrarCToCpp,
@@ -61,14 +65,6 @@ cef_scheme_registrar_t* CefCToCppScoped<
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCToCppScoped<CefSchemeRegistrarCToCpp,
-                                     CefSchemeRegistrar,
-                                     cef_scheme_registrar_t>::DebugObjCt
-    ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCToCppScoped<CefSchemeRegistrarCToCpp,

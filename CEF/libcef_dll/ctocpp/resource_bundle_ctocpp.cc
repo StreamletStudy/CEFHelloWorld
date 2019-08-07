@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=0868f65c60e3ec88606d37180138eb504f0e90f8$
+// $hash=d08dd55fbd32bdc2fe5e3623d9526af11fa7ada0$
 //
 
 #include "libcef_dll/ctocpp/resource_bundle_ctocpp.h"
@@ -88,6 +88,10 @@ bool CefResourceBundleCToCpp::GetDataResourceForScale(int resource_id,
 
 CefResourceBundleCToCpp::CefResourceBundleCToCpp() {}
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefResourceBundleCToCpp::~CefResourceBundleCToCpp() {}
+
 template <>
 cef_resource_bundle_t* CefCToCppRefCounted<
     CefResourceBundleCToCpp,
@@ -97,14 +101,6 @@ cef_resource_bundle_t* CefCToCppRefCounted<
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCToCppRefCounted<CefResourceBundleCToCpp,
-                                         CefResourceBundle,
-                                         cef_resource_bundle_t>::DebugObjCt
-    ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCToCppRefCounted<CefResourceBundleCToCpp,

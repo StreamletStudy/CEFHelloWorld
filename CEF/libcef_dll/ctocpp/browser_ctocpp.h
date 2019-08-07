@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=7962144ddad9960282099196184e1fedbf387c89$
+// $hash=af9ed3cfda9c94f046f4f9b5c9c94b1b38ff2e64$
 //
 
 #ifndef CEF_LIBCEF_DLL_CTOCPP_BROWSER_CTOCPP_H_
@@ -33,6 +33,7 @@ class CefBrowserCToCpp
     : public CefCToCppRefCounted<CefBrowserCToCpp, CefBrowser, cef_browser_t> {
  public:
   CefBrowserCToCpp();
+  virtual ~CefBrowserCToCpp();
 
   // CefBrowser methods.
   CefRefPtr<CefBrowserHost> GetHost() OVERRIDE;
@@ -55,8 +56,6 @@ class CefBrowserCToCpp
   size_t GetFrameCount() OVERRIDE;
   void GetFrameIdentifiers(std::vector<int64>& identifiers) OVERRIDE;
   void GetFrameNames(std::vector<CefString>& names) OVERRIDE;
-  bool SendProcessMessage(CefProcessId target_process,
-                          CefRefPtr<CefProcessMessage> message) OVERRIDE;
 };
 
 #endif  // CEF_LIBCEF_DLL_CTOCPP_BROWSER_CTOCPP_H_

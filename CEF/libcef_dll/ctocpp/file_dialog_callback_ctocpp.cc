@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=167e8ba9251ed87cc1f6b58dd37e1710b2529d26$
+// $hash=804d6b9699bb74fb9006bd71c76e041a6df8754f$
 //
 
 #include "libcef_dll/ctocpp/file_dialog_callback_ctocpp.h"
+#include "libcef_dll/shutdown_checker.h"
 #include "libcef_dll/transfer_util.h"
 
 // VIRTUAL METHODS - Body may be edited by hand.
@@ -21,6 +22,8 @@ NO_SANITIZE("cfi-icall")
 void CefFileDialogCallbackCToCpp::Continue(
     int selected_accept_filter,
     const std::vector<CefString>& file_paths) {
+  shutdown_checker::AssertNotShutdown();
+
   cef_file_dialog_callback_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, cont))
     return;
@@ -48,6 +51,8 @@ void CefFileDialogCallbackCToCpp::Continue(
 }
 
 NO_SANITIZE("cfi-icall") void CefFileDialogCallbackCToCpp::Cancel() {
+  shutdown_checker::AssertNotShutdown();
+
   cef_file_dialog_callback_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, cancel))
     return;
@@ -62,6 +67,12 @@ NO_SANITIZE("cfi-icall") void CefFileDialogCallbackCToCpp::Cancel() {
 
 CefFileDialogCallbackCToCpp::CefFileDialogCallbackCToCpp() {}
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefFileDialogCallbackCToCpp::~CefFileDialogCallbackCToCpp() {
+  shutdown_checker::AssertNotShutdown();
+}
+
 template <>
 cef_file_dialog_callback_t* CefCToCppRefCounted<
     CefFileDialogCallbackCToCpp,
@@ -71,14 +82,6 @@ cef_file_dialog_callback_t* CefCToCppRefCounted<
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCToCppRefCounted<CefFileDialogCallbackCToCpp,
-                                         CefFileDialogCallback,
-                                         cef_file_dialog_callback_t>::DebugObjCt
-    ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCToCppRefCounted<CefFileDialogCallbackCToCpp,

@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=0736a907753bbb95634bcecf7415b5dce8a79a86$
+// $hash=f91ce680e1b066b9130802bc712988d512adf278$
 //
 
 #include "libcef_dll/cpptoc/resolve_callback_cpptoc.h"
+#include "libcef_dll/shutdown_checker.h"
 #include "libcef_dll/transfer_util.h"
 
 namespace {
@@ -23,6 +24,8 @@ void CEF_CALLBACK
 resolve_callback_on_resolve_completed(struct _cef_resolve_callback_t* self,
                                       cef_errorcode_t result,
                                       cef_string_list_t resolved_ips) {
+  shutdown_checker::AssertNotShutdown();
+
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   DCHECK(self);
@@ -47,6 +50,12 @@ CefResolveCallbackCppToC::CefResolveCallbackCppToC() {
   GetStruct()->on_resolve_completed = resolve_callback_on_resolve_completed;
 }
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefResolveCallbackCppToC::~CefResolveCallbackCppToC() {
+  shutdown_checker::AssertNotShutdown();
+}
+
 template <>
 CefRefPtr<CefResolveCallback> CefCppToCRefCounted<
     CefResolveCallbackCppToC,
@@ -56,14 +65,6 @@ CefRefPtr<CefResolveCallback> CefCppToCRefCounted<
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCppToCRefCounted<CefResolveCallbackCppToC,
-                                         CefResolveCallback,
-                                         cef_resolve_callback_t>::DebugObjCt
-    ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCppToCRefCounted<CefResolveCallbackCppToC,

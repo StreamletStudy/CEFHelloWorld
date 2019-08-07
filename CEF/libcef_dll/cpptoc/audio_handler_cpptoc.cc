@@ -9,11 +9,12 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=adcf6805d35059945c09825ebb73b55434727d97$
+// $hash=7c55cffaa1094ff7aa49e7efbe8b4780867f6538$
 //
 
 #include "libcef_dll/cpptoc/audio_handler_cpptoc.h"
 #include "libcef_dll/ctocpp/browser_ctocpp.h"
+#include "libcef_dll/shutdown_checker.h"
 
 namespace {
 
@@ -27,6 +28,8 @@ audio_handler_on_audio_stream_started(struct _cef_audio_handler_t* self,
                                       cef_channel_layout_t channel_layout,
                                       int sample_rate,
                                       int frames_per_buffer) {
+  shutdown_checker::AssertNotShutdown();
+
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   DCHECK(self);
@@ -50,6 +53,8 @@ audio_handler_on_audio_stream_packet(struct _cef_audio_handler_t* self,
                                      const float** data,
                                      int frames,
                                      int64 pts) {
+  shutdown_checker::AssertNotShutdown();
+
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   DCHECK(self);
@@ -73,6 +78,8 @@ void CEF_CALLBACK
 audio_handler_on_audio_stream_stopped(struct _cef_audio_handler_t* self,
                                       struct _cef_browser_t* browser,
                                       int audio_stream_id) {
+  shutdown_checker::AssertNotShutdown();
+
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   DCHECK(self);
@@ -98,6 +105,12 @@ CefAudioHandlerCppToC::CefAudioHandlerCppToC() {
   GetStruct()->on_audio_stream_stopped = audio_handler_on_audio_stream_stopped;
 }
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefAudioHandlerCppToC::~CefAudioHandlerCppToC() {
+  shutdown_checker::AssertNotShutdown();
+}
+
 template <>
 CefRefPtr<CefAudioHandler> CefCppToCRefCounted<
     CefAudioHandlerCppToC,
@@ -107,14 +120,6 @@ CefRefPtr<CefAudioHandler> CefCppToCRefCounted<
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCppToCRefCounted<CefAudioHandlerCppToC,
-                                         CefAudioHandler,
-                                         cef_audio_handler_t>::DebugObjCt
-    ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCppToCRefCounted<CefAudioHandlerCppToC,

@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=74b6c55fa44e614563a38cd893840bdc1cf33c42$
+// $hash=cb2d9b53e35c8e6937669d0cac662b461128f316$
 //
 
 #include "libcef_dll/ctocpp/test/translator_test_scoped_library_child_child_ctocpp.h"
@@ -17,9 +17,10 @@
 // STATIC METHODS - Body may be edited by hand.
 
 NO_SANITIZE("cfi-icall")
-CefOwnPtr<
-    CefTranslatorTestScopedLibraryChildChild> CefTranslatorTestScopedLibraryChildChild::
-    Create(int value, int other_value, int other_other_value) {
+CefOwnPtr<CefTranslatorTestScopedLibraryChildChild>
+CefTranslatorTestScopedLibraryChildChild::Create(int value,
+                                                 int other_value,
+                                                 int other_other_value) {
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   // Execute
@@ -126,6 +127,11 @@ void CefTranslatorTestScopedLibraryChildChildCToCpp::SetValue(int value) {
 CefTranslatorTestScopedLibraryChildChildCToCpp::
     CefTranslatorTestScopedLibraryChildChildCToCpp() {}
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefTranslatorTestScopedLibraryChildChildCToCpp::
+    ~CefTranslatorTestScopedLibraryChildChildCToCpp() {}
+
 template <>
 cef_translator_test_scoped_library_child_child_t*
 CefCToCppScoped<CefTranslatorTestScopedLibraryChildChildCToCpp,
@@ -147,15 +153,6 @@ CefCToCppScoped<CefTranslatorTestScopedLibraryChildChildCToCpp,
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCToCppScoped<
-    CefTranslatorTestScopedLibraryChildChildCToCpp,
-    CefTranslatorTestScopedLibraryChildChild,
-    cef_translator_test_scoped_library_child_child_t>::DebugObjCt
-    ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCToCppScoped<

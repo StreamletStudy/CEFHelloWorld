@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=636f1185e6adc987324f44724e38545c40cf2ad1$
+// $hash=2b3612392d91efff2e607d5dd2eb47de3b611de8$
 //
 
 #include "libcef_dll/cpptoc/run_file_dialog_callback_cpptoc.h"
+#include "libcef_dll/shutdown_checker.h"
 #include "libcef_dll/transfer_util.h"
 
 namespace {
@@ -23,6 +24,8 @@ void CEF_CALLBACK run_file_dialog_callback_on_file_dialog_dismissed(
     struct _cef_run_file_dialog_callback_t* self,
     int selected_accept_filter,
     cef_string_list_t file_paths) {
+  shutdown_checker::AssertNotShutdown();
+
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   DCHECK(self);
@@ -52,6 +55,12 @@ CefRunFileDialogCallbackCppToC::CefRunFileDialogCallbackCppToC() {
       run_file_dialog_callback_on_file_dialog_dismissed;
 }
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefRunFileDialogCallbackCppToC::~CefRunFileDialogCallbackCppToC() {
+  shutdown_checker::AssertNotShutdown();
+}
+
 template <>
 CefRefPtr<CefRunFileDialogCallback>
 CefCppToCRefCounted<CefRunFileDialogCallbackCppToC,
@@ -61,14 +70,6 @@ CefCppToCRefCounted<CefRunFileDialogCallbackCppToC,
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCppToCRefCounted<
-    CefRunFileDialogCallbackCppToC,
-    CefRunFileDialogCallback,
-    cef_run_file_dialog_callback_t>::DebugObjCt ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType

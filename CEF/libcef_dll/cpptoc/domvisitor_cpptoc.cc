@@ -9,11 +9,12 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=c3c67e360c98b7c1e94bfd50717acdcbee63d38c$
+// $hash=b0d8c21f39de025e572e493d765c05b19810eb20$
 //
 
 #include "libcef_dll/cpptoc/domvisitor_cpptoc.h"
 #include "libcef_dll/ctocpp/domdocument_ctocpp.h"
+#include "libcef_dll/shutdown_checker.h"
 
 namespace {
 
@@ -21,6 +22,8 @@ namespace {
 
 void CEF_CALLBACK domvisitor_visit(struct _cef_domvisitor_t* self,
                                    struct _cef_domdocument_t* document) {
+  shutdown_checker::AssertNotShutdown();
+
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   DCHECK(self);
@@ -43,6 +46,12 @@ CefDOMVisitorCppToC::CefDOMVisitorCppToC() {
   GetStruct()->visit = domvisitor_visit;
 }
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefDOMVisitorCppToC::~CefDOMVisitorCppToC() {
+  shutdown_checker::AssertNotShutdown();
+}
+
 template <>
 CefRefPtr<CefDOMVisitor>
 CefCppToCRefCounted<CefDOMVisitorCppToC, CefDOMVisitor, cef_domvisitor_t>::
@@ -50,13 +59,6 @@ CefCppToCRefCounted<CefDOMVisitorCppToC, CefDOMVisitor, cef_domvisitor_t>::
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount
-    CefCppToCRefCounted<CefDOMVisitorCppToC, CefDOMVisitor, cef_domvisitor_t>::
-        DebugObjCt ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCppToCRefCounted<CefDOMVisitorCppToC,

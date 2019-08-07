@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=9b0984f489348c8d182ec919db8e56a2567b583b$
+// $hash=7ee64d052fac71a9afcb068620fe23aadf8557f0$
 //
 
 #include "libcef_dll/cpptoc/test/translator_test_ref_ptr_client_child_cpptoc.h"
+#include "libcef_dll/shutdown_checker.h"
 
 namespace {
 
@@ -20,6 +21,8 @@ namespace {
 
 int CEF_CALLBACK translator_test_ref_ptr_client_child_get_other_value(
     struct _cef_translator_test_ref_ptr_client_child_t* self) {
+  shutdown_checker::AssertNotShutdown();
+
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   DCHECK(self);
@@ -36,6 +39,8 @@ int CEF_CALLBACK translator_test_ref_ptr_client_child_get_other_value(
 
 int CEF_CALLBACK translator_test_ref_ptr_client_child_get_value(
     struct _cef_translator_test_ref_ptr_client_t* self) {
+  shutdown_checker::AssertNotShutdown();
+
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
   DCHECK(self);
@@ -63,6 +68,13 @@ CefTranslatorTestRefPtrClientChildCppToC::
   GetStruct()->base.get_value = translator_test_ref_ptr_client_child_get_value;
 }
 
+// DESTRUCTOR - Do not edit by hand.
+
+CefTranslatorTestRefPtrClientChildCppToC::
+    ~CefTranslatorTestRefPtrClientChildCppToC() {
+  shutdown_checker::AssertNotShutdown();
+}
+
 template <>
 CefRefPtr<CefTranslatorTestRefPtrClientChild>
 CefCppToCRefCounted<CefTranslatorTestRefPtrClientChildCppToC,
@@ -73,14 +85,6 @@ CefCppToCRefCounted<CefTranslatorTestRefPtrClientChildCppToC,
   NOTREACHED() << "Unexpected class type: " << type;
   return NULL;
 }
-
-#if DCHECK_IS_ON()
-template <>
-base::AtomicRefCount CefCppToCRefCounted<
-    CefTranslatorTestRefPtrClientChildCppToC,
-    CefTranslatorTestRefPtrClientChild,
-    cef_translator_test_ref_ptr_client_child_t>::DebugObjCt ATOMIC_DECLARATION;
-#endif
 
 template <>
 CefWrapperType CefCppToCRefCounted<
