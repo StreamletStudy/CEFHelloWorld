@@ -20,10 +20,10 @@ ResourceHandler::ResourceHandler() : m_lpszHomepage(nullptr), m_dwSize(0), m_dwS
     assert(m_lpszHomepage != nullptr);
 }
 
-bool ResourceHandler::ProcessRequest(CefRefPtr<CefRequest> request, CefRefPtr<CefCallback> callback)
+bool ResourceHandler::Open(CefRefPtr<CefRequest> request, bool& handle_request, CefRefPtr<CefCallback> callback)
 {
     m_dwSizeRead = 0;
-    callback->Continue();
+    handle_request = true;
     return true;
 }
 
@@ -39,7 +39,7 @@ void ResourceHandler::Cancel()
 
 }
 
-bool ResourceHandler::ReadResponse(void* data_out, int bytes_to_read, int& bytes_read, CefRefPtr<CefCallback> callback)
+bool ResourceHandler::Read(void* data_out, int bytes_to_read, int& bytes_read, CefRefPtr<CefResourceReadCallback> callback)
 {
     bytes_read = min(m_dwSize - m_dwSizeRead, (DWORD)bytes_to_read);
     memcpy(data_out, m_lpszHomepage, bytes_read);

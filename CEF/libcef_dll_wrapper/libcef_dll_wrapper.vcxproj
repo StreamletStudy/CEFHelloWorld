@@ -74,16 +74,16 @@
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>$(ProjectDir)..\lib\$(Platform);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)..\lib\$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LibraryPath>$(ProjectDir)..\lib\$(Platform);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)..\lib\$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LibraryPath>$(ProjectDir)..\lib\$(Platform);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)..\lib\$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LibraryPath>$(ProjectDir)..\lib\$(Platform);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)..\lib\$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -123,7 +123,7 @@
       <AdditionalDependencies>libcef.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
-      <Command>XCopy "$(ProjectDir)..\bin\$(Platform)\*" "$(OutDir)" /E /Y
+      <Command>XCopy "$(ProjectDir)..\bin\$(Platform)\$(Configuration)\*" "$(OutDir)" /E /Y
 XCopy "$(ProjectDir)..\res\*" "$(OutDir)" /E /Y
 Expand "$(OutDir)libcef.dl_" "$(OutDir)libcef.dll"
 Del /Q "$(OutDir)libcef.dl_"</Command>
@@ -167,7 +167,7 @@ Del /Q "$(OutDir)libcef.dl_"</Command>
       <AdditionalDependencies>libcef.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
-      <Command>XCopy "$(ProjectDir)..\bin\$(Platform)\*" "$(OutDir)" /E /Y
+      <Command>XCopy "$(ProjectDir)..\bin\$(Platform)\$(Configuration)\*" "$(OutDir)" /E /Y
 XCopy "$(ProjectDir)..\res\*" "$(OutDir)" /E /Y
 Expand "$(OutDir)libcef.dl_" "$(OutDir)libcef.dll"
 Del /Q "$(OutDir)libcef.dl_"</Command>
@@ -211,7 +211,7 @@ Del /Q "$(OutDir)libcef.dl_"</Command>
       <AdditionalDependencies>libcef.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
-      <Command>XCopy "$(ProjectDir)..\bin\$(Platform)\*" "$(OutDir)" /E /Y
+      <Command>XCopy "$(ProjectDir)..\bin\$(Platform)\$(Configuration)\*" "$(OutDir)" /E /Y
 XCopy "$(ProjectDir)..\res\*" "$(OutDir)" /E /Y
 Expand "$(OutDir)libcef.dl_" "$(OutDir)libcef.dll"
 Del /Q "$(OutDir)libcef.dl_"</Command>
@@ -255,7 +255,7 @@ Del /Q "$(OutDir)libcef.dl_"</Command>
       <AdditionalDependencies>libcef.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
-      <Command>XCopy "$(ProjectDir)..\bin\$(Platform)\*" "$(OutDir)" /E /Y
+      <Command>XCopy "$(ProjectDir)..\bin\$(Platform)\$(Configuration)\*" "$(OutDir)" /E /Y
 XCopy "$(ProjectDir)..\res\*" "$(OutDir)" /E /Y
 Expand "$(OutDir)libcef.dl_" "$(OutDir)libcef.dll"
 Del /Q "$(OutDir)libcef.dl_"</Command>
