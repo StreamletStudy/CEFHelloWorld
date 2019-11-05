@@ -7,6 +7,11 @@ CefRefPtr<CefBrowserProcessHandler> AppBrowser::GetBrowserProcessHandler()
     return this;
 }
 
+void AppBrowser::OnRegisterCustomSchemes(CefRawPtr<CefSchemeRegistrar> registrar)
+{
+    registrar->AddCustomScheme(L"res", CEF_SCHEME_OPTION_STANDARD | CEF_SCHEME_OPTION_SECURE | CEF_SCHEME_OPTION_CORS_ENABLED | CEF_SCHEME_OPTION_FETCH_ENABLED);
+}
+
 void AppBrowser::OnContextInitialized()
 {
     m_bInitialized = true;

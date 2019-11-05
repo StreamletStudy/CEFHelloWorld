@@ -7,6 +7,11 @@ CefRefPtr<CefRenderProcessHandler> AppRenderer::GetRenderProcessHandler()
     return this;
 }
 
+void AppRenderer::OnRegisterCustomSchemes(CefRawPtr<CefSchemeRegistrar> registrar)
+{
+    registrar->AddCustomScheme(L"res", CEF_SCHEME_OPTION_STANDARD | CEF_SCHEME_OPTION_SECURE | CEF_SCHEME_OPTION_CORS_ENABLED | CEF_SCHEME_OPTION_FETCH_ENABLED);
+}
+
 void AppRenderer::OnContextCreated(CefRefPtr<CefBrowser> browser,
     CefRefPtr<CefFrame> frame, CefRefPtr<CefV8Context> context)
 {

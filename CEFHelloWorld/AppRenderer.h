@@ -3,6 +3,8 @@
 class AppRenderer : public CefApp, public CefRenderProcessHandler
 {
 public:
+    virtual void OnRegisterCustomSchemes(
+        CefRawPtr<CefSchemeRegistrar> registrar) override;
 
     virtual CefRefPtr<CefRenderProcessHandler> GetRenderProcessHandler() override;
     virtual void OnContextCreated(CefRefPtr<CefBrowser> browser,
