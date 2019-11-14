@@ -1,13 +1,15 @@
 #pragma once
 
 #include "MainFrame.h"
+#include "ClientDevTools.h"
 
 class Client:
     public CefClient,
     public CefLifeSpanHandler,
     public CefContextMenuHandler,
     public CefLoadHandler,
-    public CefDisplayHandler
+    public CefDisplayHandler,
+    public CefKeyboardHandler
 {
 public:
     Client(MainFrame *pMainFrame) : m_pMainFrame(pMainFrame)
@@ -47,8 +49,12 @@ public:
     virtual void OnTitleChange(CefRefPtr<CefBrowser> browser, const CefString& title) override;
     virtual void OnLoadingProgressChange(CefRefPtr<CefBrowser> browser, double progress) override;
 
+    virtual CefRefPtr< CefKeyboardHandler> GetKeyboardHandler() override;
+    virtual bool OnKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEvent& event, CefEventHandle os_event) override;
+
 private:
     MainFrame *m_pMainFrame;
+    CefRefPtr<ClientDevTools> m_DevToolsClient;
 
     IMPLEMENT_REFCOUNTING(Client);
 };

@@ -2,6 +2,7 @@
 #include "res/resource.h"
 #include "Client.h"
 
+
 CefRefPtr<CefLifeSpanHandler> Client::GetLifeSpanHandler()
 {
     return this;
@@ -111,4 +112,40 @@ void Client::OnTitleChange(CefRefPtr<CefBrowser> browser, const CefString& title
 void Client::OnLoadingProgressChange(CefRefPtr<CefBrowser> browser, double progress)
 {
     m_pMainFrame->OnLoadingProgressChange(progress);
+}
+
+CefRefPtr<CefKeyboardHandler> Client::GetKeyboardHandler()
+{
+    return this;
+}
+
+bool Client::OnKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEvent& event, CefEventHandle os_event)
+{
+    if (event.type != KEYEVENT_KEYUP || event.windows_key_code != VK_F12)
+    {
+        return false;
+    }
+
+    if (browser->GetHost()->HasDevTools())
+    {
+        return false;
+    }
+
+    CefWindowInfo window_info;
+    window_info.SetAsPopup(browser->GetHost()->GetWindowHandle(), L"DevTools");
+
+    RECT rect = {};
+    ::GetWindowRect(browser->GetHost()->GetWindowHandle(), &rect);
+    window_info.width = max(rect.right - rect.left, 800);
+    window_info.height = max(rect.bottom - rect.top, 600);
+
+    if (m_DevToolsClient == nullptr)
+    {
+        m_DevToolsClient = new ClientDevTools();
+    }
+
+    CefBrowserSettings settings;
+    browser->GetHost()->ShowDevTools(window_info, m_DevToolsClient, settings, CefPoint());
+
+    return true;
 }

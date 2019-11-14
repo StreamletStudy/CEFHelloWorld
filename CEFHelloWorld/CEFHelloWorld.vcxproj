@@ -194,6 +194,7 @@
     <ClInclude Include="AppBrowser.h" />
     <ClInclude Include="AppRenderer.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="ClientDevTools.h" />
     <ClInclude Include="MainFrame.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="PageHolder.h" />
@@ -209,6 +210,7 @@
     <ClCompile Include="AppBrowser.cpp" />
     <ClCompile Include="AppRenderer.cpp" />
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="ClientDevTools.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainFrame.cpp" />
     <ClCompile Include="PageHolder.cpp" />
